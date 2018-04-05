@@ -1,6 +1,6 @@
 package database
 
-import "github.com/developmentnow/skwiz-it-api/model"
+import "github.com/benkauffman/skwiz-it-api/model"
 
 func UpsertUser(user *model.User) *model.User {
 

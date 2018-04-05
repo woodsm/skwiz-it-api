@@ -3,7 +3,7 @@ package database
 import (
 	"log"
 
-	"github.com/developmentnow/skwiz-it-api/config"
+	"github.com/benkauffman/skwiz-it-api/config"
 	"upper.io/db.v3/lib/sqlbuilder"
 	"upper.io/db.v3/mysql" // Imports the mysql adapter.
 )

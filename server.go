@@ -5,8 +5,8 @@ import (
 	"net/http"
 
 	"github.com/codegangsta/negroni"
-	"github.com/developmentnow/skwiz-it-api/handler"
-	"github.com/developmentnow/skwiz-it-api/middleware"
+	"github.com/benkauffman/skwiz-it-api/handler"
+	"github.com/benkauffman/skwiz-it-api/middleware"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )

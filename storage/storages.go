@@ -10,7 +10,7 @@ import (
 	"github.com/aws/aws-sdk-go/aws/credentials"
 	"github.com/aws/aws-sdk-go/aws/session"
 	"github.com/aws/aws-sdk-go/service/s3"
-	"github.com/developmentnow/skwiz-it-api/config"
+	"github.com/benkauffman/skwiz-it-api/config"
 	"github.com/twinj/uuid"
 	"log"
 )

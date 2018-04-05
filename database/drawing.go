@@ -1,10 +1,11 @@
 package database
 
 import (
-	"github.com/developmentnow/skwiz-it-api/model"
-	"log"
 	"database/sql"
 	"fmt"
+	"log"
+
+	"github.com/benkauffman/skwiz-it-api/model"
 )
 
 func CreateDrawing() int64 {

@@ -7,12 +7,12 @@ import (
 	"net/http"
 	"strings"
 
-	"github.com/developmentnow/skwiz-it-api/storage"
+	"github.com/benkauffman/skwiz-it-api/storage"
 	"github.com/gorilla/mux"
-	"github.com/developmentnow/skwiz-it-api/helper"
-	"github.com/developmentnow/skwiz-it-api/database"
+	"github.com/benkauffman/skwiz-it-api/helper"
+	"github.com/benkauffman/skwiz-it-api/database"
 	"strconv"
-	"github.com/developmentnow/skwiz-it-api/model"
+	"github.com/benkauffman/skwiz-it-api/model"
 )
 
 var sections = [3]string{"top", "middle", "bottom"}

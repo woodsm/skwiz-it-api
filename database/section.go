@@ -1,8 +1,9 @@
 package database
 
 import (
-	"github.com/developmentnow/skwiz-it-api/model"
 	"log"
+
+	"github.com/benkauffman/skwiz-it-api/model"
 )
 
 func SaveSection(userId int, typeOf string, url string) (model.Drawing, error) {

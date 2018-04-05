@@ -3,9 +3,9 @@ This is a relatively simple API thrown together for the _"exquisite corps"_ app 
 
 ## Install and Run
 ```shell
-$ go get github.com/developmentnow/skwiz-it-api
+$ go get github.com/benkauffman/skwiz-it-api
 
-$ cd $GOPATH/src/github.com/developmentnow/skwiz-it-api
+$ cd $GOPATH/src/github.com/benkauffman/skwiz-it-api
 $ go get && go build
 $ chmod +x ./skwiz-it-api && ./skwiz-it-api
 ```

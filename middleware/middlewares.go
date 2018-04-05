@@ -1,10 +1,11 @@
 package middleware
 
 import (
-	"net/http"
 	"encoding/base64"
-	"github.com/developmentnow/skwiz-it-api/model"
 	"encoding/json"
+	"net/http"
+
+	"github.com/benkauffman/skwiz-it-api/model"
 )
 
 //expects base64 encoded user information in the header `X-App-User`
