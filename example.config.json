@@ -1,0 +1,14 @@
+{
+    "S3": {
+      "key": "my-special-key",
+      "secret": "sUp3rS3cre7",
+      "bucket": "some-bucket",
+      "region":"us-west-2"
+    },
+    "MySQL": {
+      "host": "some.db.net",
+      "database": "api_db",
+      "user": "username",
+      "password": "3245ertfdsa"
+    }
+  }
