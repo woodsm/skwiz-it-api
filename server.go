@@ -7,10 +7,12 @@ import (
 	"github.com/benkauffman/skwiz-it-api/handler"
 	"github.com/benkauffman/skwiz-it-api/middleware"
 	"github.com/codegangsta/negroni"
+	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
 
 func main() {
+
 	listen := "0.0.0.0:3000"
 
 	log.Printf("Starting server and listening on %s", listen)
@@ -39,5 +41,10 @@ func main() {
 	public.Methods("GET").Path("/drawing/{id}").HandlerFunc(handler.GetDrawing)
 	public.Methods("GET").Path("/drawings").HandlerFunc(handler.GetDrawings)
 
-	log.Fatal(http.ListenAndServe(listen, router))
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
+
+	log.Fatal(http.ListenAndServe(listen, handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))
+
 }
