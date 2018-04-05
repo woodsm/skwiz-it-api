@@ -4,9 +4,9 @@ import (
 	"log"
 	"net/http"
 
+	"github.com/codegangsta/negroni"
 	"github.com/developmentnow/skwiz-it-api/handler"
 	"github.com/developmentnow/skwiz-it-api/middleware"
-	"github.com/codegangsta/negroni"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
 )
@@ -41,7 +41,7 @@ func main() {
 	public.Methods("GET").Path("/drawing/{id}").HandlerFunc(handler.GetDrawing)
 	public.Methods("GET").Path("/drawings").HandlerFunc(handler.GetDrawings)
 
-	allowedHeaders := handlers.AllowedHeaders([]string{"X-Requested-With"})
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-App-User", "Content-Type", "Accept"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 

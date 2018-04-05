@@ -49,7 +49,7 @@ The API requires that a config.json file live in the root directory with the cor
 End points with a _private_ base, require the header `X-App-User` to be provided.  
 The `X-App-User` header should contain the user json object base64 encoded  
 `X-App-User` header example : `eyJuYW1lIjoiQmVuIiwgImVtYWlsIjoiYmVuQGtyYXNoaWRidWlsdC5jb20iLCAiaWQiOiAxfQ==`
-- http://localhost:3000/api/v1/private/section
+- http://localhost:3000/api/v1/private/section/type
     - `GET`: Get the section _type_ that should be drawn.
     - `"top"`, `"middle"`, `"bottom"`
     
