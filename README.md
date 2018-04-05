@@ -30,19 +30,6 @@ The API requires that a config.json file live in the root directory with the cor
   }
 ```
 
-## Secured API Endpoints
-End points with a _private_ base, require the header `X-App-User` to be provided.  
-The `X-App-User` header should contain the user json object base64 encoded  
-`X-App-User` header example : `eyJuYW1lIjoiQmVuIiwgImVtYWlsIjoiYmVuQGtyYXNoaWRidWlsdC5jb20iLCAiaWQiOiAxfQ==`
-- http://localhost:3000/api/v1/private/section
-    - `GET`: Get the section _type_ that should be drawn.
-    - `"top"`, `"middle"`, `"bottom"`
-    
-- http://localhost:3000/api/v1/private/section/{type}
-    - `POST`: Post a base64 encoded PNG that has been drawn for a section
-    - `data:image/png;base64,iVkhdfjdAjdfirtn=`
-    - returns the drawing associated with the section that was posted
-
 ## Public API Endpoints
 - http://localhost:3000/api/v1/public/register
     - `POST`: Register the user with the API
@@ -56,6 +43,21 @@ The `X-App-User` header should contain the user json object base64 encoded
 - http://localhost:3000/api/v1/public/drawings
     - `GET`: Get all of the drawings
     - returns an array of all the drawings (could be used as a gallery)
+
+
+## Secured API Endpoints
+End points with a _private_ base, require the header `X-App-User` to be provided.  
+The `X-App-User` header should contain the user json object base64 encoded  
+`X-App-User` header example : `eyJuYW1lIjoiQmVuIiwgImVtYWlsIjoiYmVuQGtyYXNoaWRidWlsdC5jb20iLCAiaWQiOiAxfQ==`
+- http://localhost:3000/api/v1/private/section
+    - `GET`: Get the section _type_ that should be drawn.
+    - `"top"`, `"middle"`, `"bottom"`
+    
+- http://localhost:3000/api/v1/private/section/{type}
+    - `POST`: Post a base64 encoded PNG that has been drawn for a section
+    - `data:image/png;base64,iVkhdfjdAjdfirtn=`
+    - returns the drawing associated with the section that was posted
+
 
 ## User
 ```json
