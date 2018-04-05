@@ -1,7 +1,7 @@
 package database
 
 import (
-	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/developmentnow/skwiz-it-api/model"
 	"log"
 	"database/sql"
 	"fmt"

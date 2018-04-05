@@ -4,8 +4,8 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/benkauffman/skwiz-it-api/handler"
-	"github.com/benkauffman/skwiz-it-api/middleware"
+	"github.com/developmentnow/skwiz-it-api/handler"
+	"github.com/developmentnow/skwiz-it-api/middleware"
 	"github.com/codegangsta/negroni"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"

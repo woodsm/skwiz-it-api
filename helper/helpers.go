@@ -1,7 +1,7 @@
 package helper
 
 import (
-	"github.com/benkauffman/skwiz-it-api/config"
+	"github.com/developmentnow/skwiz-it-api/config"
 	"net/http"
 )
 

@@ -3,7 +3,7 @@ package middleware
 import (
 	"net/http"
 	"encoding/base64"
-	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/developmentnow/skwiz-it-api/model"
 	"encoding/json"
 )
 
