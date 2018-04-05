@@ -43,6 +43,20 @@ The `X-App-User` header should contain the user json object base64 encoded
     - `data:image/png;base64,iVkhdfjdAjdfirtn=`
     - returns the drawing associated with the section that was posted
 
+## Public API Endpoints
+- http://localhost:3000/api/v1/public/register
+    - `POST`: Register the user with the API
+    - `{"email":"some@email.com","name":"User X"}`
+    - returns the user with an id after it is created (should be used for auth)
+    
+- http://localhost:3000/api/v1/public/drawing/{id}
+    - `GET`: Get a specific drawing
+    - returns the associated drawing
+
+- http://localhost:3000/api/v1/public/drawings
+    - `GET`: Get all of the drawings
+    - returns an array of all the drawings (could be used as a gallery)
+
 ## User
 ```json
 {
