@@ -6,13 +6,13 @@ This is a relatively simple API thrown together for the _"exquisite corps"_ app 
 $ go get github.com/benkauffman/skwiz-it-api
 
 $ cd $GOPATH/src/github.com/benkauffman/skwiz-it-api
-$ go build
+$ go get && go build
 $ chmod +x ./skwiz-it-api && ./skwiz-it-api
 ```
 
 ## Configure
 An example configuration is listed below and is also saved under example.config.json  
-The API requires a config.json file live in the root directory with the correct S3 and DB properties defined
+The API requires that a config.json file live in the root directory with the correct S3 and DB properties defined
 ```json
 {
     "S3": {
@@ -31,8 +31,9 @@ The API requires a config.json file live in the root directory with the correct 
 ```
 
 ## Secured API Endpoints
-Requires a base64 header `X-App-User` with the user information defined  
-Example : `eyJuYW1lIjoiQmVuIiwgImVtYWlsIjoiYmVuQGtyYXNoaWRidWlsdC5jb20iLCAiaWQiOiAxfQ==`
+End points with a _private_ base, require the header `X-App-User` to be provided.  
+The `X-App-User` header should contain the user json object base64 encoded
+`X-App-User` header example : `eyJuYW1lIjoiQmVuIiwgImVtYWlsIjoiYmVuQGtyYXNoaWRidWlsdC5jb20iLCAiaWQiOiAxfQ==`
 - http://localhost:3000/api/v1/private/section
     - `GET`: Get the section _type_ that should be drawn.
     - `"top"`, `"middle"`, `"bottom"`
