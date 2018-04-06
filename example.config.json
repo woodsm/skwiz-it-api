@@ -1,19 +1,22 @@
 {
   "S3": {
-    "key": "my-special-key",
-    "secret": "sUp3rS3cre7",
-    "bucket": "some-bucket",
-    "region": "us-west-2"
+    "Key": "my-special-key",
+    "Secret": "sUp3rS3cre7",
+    "Bucket": "some-bucket",
+    "Region": "us-west-2"
   },
   "MySQL": {
-    "host": "some.db.net",
-    "database": "api_db",
-    "user": "username",
-    "password": "3245ertfdsa"
+    "Host": "some.db.net",
+    "Database": "api_db",
+    "User": "username",
+    "Password": "3245ertfdsa"
   },
   "MailGun": {
     "Domain": "YourDomain",
     "ApiKey": "YourApiKey",
     "PublicApiKey": "YourPublicApiKey"
+  },
+  "App": {
+    "Domain": "http://localhost:3000"
   }
 }

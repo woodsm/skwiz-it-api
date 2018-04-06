@@ -41,7 +41,7 @@ func main() {
 	public.Methods("GET").Path("/drawing/{id}").HandlerFunc(handler.GetDrawing)
 	public.Methods("GET").Path("/drawings").HandlerFunc(handler.GetDrawings)
 
-	allowedHeaders := handlers.AllowedHeaders([]string{"X-App-User", "Content-Type", "Accept"})
+	allowedHeaders := handlers.AllowedHeaders([]string{"X-App-user", "Content-Type", "Accept"})
 	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 

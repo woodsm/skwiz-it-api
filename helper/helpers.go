@@ -40,7 +40,7 @@ func WriteJsonResponse(w http.ResponseWriter, bytes []byte) {
 }
 
 func GetUser(r *http.Request) (*model.User, error) {
-	bytes, _ := base64.StdEncoding.DecodeString(r.Header.Get("X-App-User"))
+	bytes, _ := base64.StdEncoding.DecodeString(r.Header.Get("X-App-user"))
 
 	user := new(model.User)
 	err := json.Unmarshal(bytes, user)
