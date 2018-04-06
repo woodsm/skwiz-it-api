@@ -1,8 +1,15 @@
 package database
 
-import "github.com/benkauffman/skwiz-it-api/model"
+import (
+	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/benkauffman/skwiz-it-api/validation"
+)
 
 func UpsertUser(user *model.User) *model.User {
+
+	if !validation.IsValidEmail(user.Email){
+		return nil, error("")
+	}
 
 	var db = getDatabase()
 	defer db.Close()
