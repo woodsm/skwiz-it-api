@@ -23,7 +23,7 @@ fi
 #      "development@developmentnow.com" \
 #      "y"
 
-_DOCKER_TAG=$(`date '+%Y_%m_%d_%H_%M_%S'`)
+_DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')
 _DOCKER_IMAGE_NAME="speed-label-api:${_DOCKER_TAG}"
 
 NAME=${1}
@@ -99,7 +99,7 @@ VIRTUAL_HOST="${SUB_DOMAIN}.${DOMAIN}"
 echo "Deploying ${NAME} and binding to ${VIRTUAL_HOST}..."
 
 # Building docker image
-docker build --no-cache -t ${_DOCKER_IMAGE_NAME} ../
+docker build --no-cache -t ${_DOCKER_IMAGE_NAME} .
 
 set +e
 docker rm -f ${NAME}
@@ -117,3 +117,5 @@ docker run -d \
 CONTAINER_ID=$(docker ps -q -f name=^/${NAME}$)
 
 echo "Docker container ${NAME} running as id ${CONTAINER_ID}"
+
+docker rmi $(docker images --filter "dangling=true" -q --no-trunc)
