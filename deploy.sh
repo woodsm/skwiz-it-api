@@ -65,7 +65,7 @@ else
 fi
 
 if [[ -z "${DOMAIN}" ]]; then
-    echo "Enter domain url (i.e. example.net):"
+    echo "Enter domain url (i.e. skwiz.it):"
     read DOMAIN
     if [[ -z "${DOMAIN}" ]]; then
         echo "Host domain was not set"
