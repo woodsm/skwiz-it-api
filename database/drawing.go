@@ -6,7 +6,55 @@ import (
 	"log"
 
 	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/benkauffman/skwiz-it-api/notification"
+	"github.com/benkauffman/skwiz-it-api/helper"
 )
+
+func IsDrawingComplete(drawingId int64) {
+	log.Printf("Checking if drawing %d is complete and handling accordingly...", drawingId)
+	var db = getDatabase()
+	defer db.Close()
+
+	row, err := db.QueryRow("SELECT COUNT(drawing_id) AS qty FROM section WHERE drawing_id = ?", drawingId)
+
+	if err != nil {
+		log.Fatalf("Unable to get section count : %q\n", err)
+	}
+
+	qty := 0
+	err = row.Scan(&qty)
+	if err != nil {
+		log.Print(err)
+	}
+
+	if qty == len(helper.GetSections()) {
+		log.Printf("Drawing %d has been completed... Sending out emails and setting as completed...", drawingId)
+		setDrawingAsComplete(drawingId)
+		sendEmails(drawingId)
+	} else {
+		log.Printf("Drawing %d only has %d/%d parts supplied...", drawingId, qty, len(helper.GetSections()))
+	}
+}
+
+
+func sendEmails(drawingId int64) {
+	log.Printf("Sending email to users for drawing %d completion", drawingId)
+	for _, emailAddr := range GetEmailAddresses(drawingId) {
+		log.Printf("Sending email in background thread to %s for drawing %d", emailAddr, drawingId)
+		go notification.SendEmail(emailAddr, drawingId)
+	}
+}
+
+func setDrawingAsComplete(drawingId int64) {
+	var db = getDatabase()
+	defer db.Close()
+
+	_, err := db.Exec(`UPDATE drawing SET completed = NOW() WHERE id = ?`, drawingId)
+
+	if err != nil {
+		log.Fatalf("Unable to set drawing %d completed datetime : %q\n", drawingId, err)
+	}
+}
 
 func CreateDrawing() int64 {
 	var db = getDatabase()

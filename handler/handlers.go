@@ -37,7 +37,11 @@ func RegisterUser(w http.ResponseWriter, r *http.Request) {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 	}
 
-	database.UpsertUser(user)
+	user, err = database.UpsertUser(user)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusBadRequest)
+		return
+	}
 
 	bytes, err := json.Marshal(user)
 	if err != nil {

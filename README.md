@@ -12,22 +12,27 @@ $ chmod +x ./skwiz-it-api && ./skwiz-it-api
 
 ## Configure
 An example configuration is listed below and is also saved under example.config.json  
-The API requires that a config.json file live in the root directory with the correct S3 and DB properties defined
+The API requires that a config.json file live in the root directory with the correct S3, DB and MailGun properties defined
 ```json
 {
-    "S3": {
-      "key": "my-special-key",
-      "secret": "sUp3rS3cre7",
-      "bucket": "some-bucket",
-      "region":"us-west-2"
-    },
-    "MySQL": {
-      "host": "some.db.net",
-      "database": "api_db",
-      "user": "username",
-      "password": "3245ertfdsa"
-    }
+  "S3": {
+    "key": "my-special-key",
+    "secret": "sUp3rS3cre7",
+    "bucket": "some-bucket",
+    "region": "us-west-2"
+  },
+  "MySQL": {
+    "host": "some.db.net",
+    "database": "api_db",
+    "user": "username",
+    "password": "3245ertfdsa"
+  },
+  "MailGun": {
+    "Domain": "YourDomain",
+    "ApiKey": "YourApiKey",
+    "PublicApiKey": "YourPublicApiKey"
   }
+}
 ```
 
 ## Public API Endpoints

@@ -104,7 +104,9 @@ func addToDrawing(userId int64, typeOf string, url string) int64 {
 
 	drawingId := getMissingDrawingId(typeOf)
 
-	if drawingId <= 0 {
+	existing := drawingId >= 1
+
+	if !existing {
 		log.Printf("Unable to find an existing drawing for section %s", typeOf)
 		log.Printf("Creating new drawing for section %s", typeOf)
 		drawingId = CreateDrawing()
@@ -118,6 +120,10 @@ func addToDrawing(userId int64, typeOf string, url string) int64 {
 		log.Fatalf("Unable to create %s section for drawing %d : %q\n", typeOf, drawingId, err)
 	} else {
 		log.Printf("Created section %s for drawing %d", typeOf, drawingId)
+		if existing {
+			log.Printf("Running background task to validate completion of drawing...")
+			go IsDrawingComplete(drawingId)
+		}
 	}
 
 	return drawingId
