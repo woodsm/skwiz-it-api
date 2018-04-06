@@ -29,8 +29,8 @@ func GetNeededSection() (string) {
 
 	sql := `
 SELECT
-  MIN(qty)  AS qty,
-  MIN(type) AS type
+  MIN(qty) AS qty,
+  type     AS type
 FROM (
        SELECT
          COUNT(drawing_id) AS qty,
@@ -54,6 +54,8 @@ FROM (
        FROM section
        WHERE type = 'bottom'
      ) AS smry
+GROUP BY type
+ORDER BY qty ASC
 LIMIT 1
 `
 	rows, err := db.Query(sql)
