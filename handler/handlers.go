@@ -3,7 +3,6 @@ package handler
 import (
 	"encoding/json"
 	"io/ioutil"
-	"math/rand"
 	"net/http"
 	"strings"
 
@@ -15,11 +14,9 @@ import (
 	"github.com/benkauffman/skwiz-it-api/model"
 )
 
-var sections = [3]string{"top", "middle", "bottom"}
-
 func GetSectionType(w http.ResponseWriter, r *http.Request) {
 
-	bytes, err := json.Marshal(sections[rand.Intn(len(sections))])
+	bytes, err := json.Marshal(database.GetNeededSection())
 	if err != nil {
 		http.Error(w, err.Error(), http.StatusInternalServerError)
 		return
@@ -56,7 +53,7 @@ func SaveSection(w http.ResponseWriter, r *http.Request) {
 	vars := mux.Vars(r)
 	typeOf := vars["type"]
 
-	if !helper.Contains(sections, typeOf) {
+	if !helper.Contains(helper.GetSections(), typeOf) {
 		http.Error(w, "Section type \""+typeOf+"\" is not valid", http.StatusBadRequest)
 		return
 	}

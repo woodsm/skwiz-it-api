@@ -4,6 +4,8 @@ import (
 	"log"
 
 	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/benkauffman/skwiz-it-api/helper"
+	"math/rand"
 )
 
 func SaveSection(userId int64, typeOf string, url string) (model.Drawing, error) {
@@ -16,6 +18,71 @@ func SaveSection(userId int64, typeOf string, url string) (model.Drawing, error)
 	}
 
 	return drawing, nil
+}
+
+func GetNeededSection() (string) {
+
+	log.Printf("Looking for needed section...")
+
+	var db = getDatabase()
+	defer db.Close()
+
+	sql := `
+SELECT
+  MIN(qty)  AS qty,
+  MIN(type) AS type
+FROM (
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'top'             AS type
+       FROM section
+       WHERE type = 'top'
+
+       UNION
+
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'middle'          AS type
+       FROM section
+       WHERE type = 'middle'
+
+       UNION
+
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'bottom'          AS type
+       FROM section
+       WHERE type = 'bottom'
+     ) AS smry
+LIMIT 1
+`
+	rows, err := db.Query(sql)
+
+	if err != nil {
+		log.Fatalf("Unable get missing section from database : %q\n", err)
+	}
+
+	qty := 0
+	section := ""
+
+	for rows.Next() {
+		err = rows.Scan(&qty, &section)
+
+		if err != nil {
+			log.Print(err)
+		}
+	}
+
+	if err != nil {
+		log.Print(err)
+	}
+
+	if qty == 0 || section == "" {
+		sections := helper.GetSections()
+		section = sections[rand.Intn(len(sections))]
+	}
+
+	return section
 }
 
 func addToDrawing(userId int64, typeOf string, url string) int64 {

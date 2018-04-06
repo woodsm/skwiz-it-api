@@ -47,3 +47,7 @@ func GetUser(r *http.Request) (*model.User, error) {
 
 	return user, err
 }
+
+func GetSections() [3]string {
+	return [3]string{"top", "middle", "bottom"}
+}

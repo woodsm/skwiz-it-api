@@ -1,11 +1,32 @@
 USE dwp_18_dev_00_00_00;
 INSERT INTO section (drawing_id, type, app_user_id, url, created, updated)
-VALUES (
-  (SELECT id
-   FROM drawing
-   WHERE completed IS NULL
-         AND id NOT IN (SELECT drawing_id
-                        FROM section
-                        WHERE type = ?)
-   LIMIT 1)
-  , ?, ?, ?, NOW(), NOW())
+VALUES (?, ?, ?, ?, NOW(), NOW());
+
+
+SELECT
+  MIN(qty)  AS qty,
+  MIN(type) AS type
+FROM (
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'top'             AS type
+       FROM section
+       WHERE type = 'top'
+
+       UNION
+
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'middle'          AS type
+       FROM section
+       WHERE type = 'middle'
+
+       UNION
+
+       SELECT
+         COUNT(drawing_id) AS qty,
+         'bottom'          AS type
+       FROM section
+       WHERE type = 'bottom'
+     ) AS smry
+LIMIT 1
