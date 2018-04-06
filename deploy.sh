@@ -23,8 +23,7 @@ fi
 #      "development@developmentnow.com" \
 #      "y"
 
-_DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')
-_DOCKER_IMAGE_NAME="speed-label-api:${_DOCKER_TAG}"
+
 
 NAME=${1}
 DOMAIN=${2}
@@ -75,7 +74,7 @@ if [[ -z "${DOMAIN}" ]]; then
 fi
 
 if [[ -z "${SUB_DOMAIN}" ]]; then
-    echo "Enter domain url (i.e. api):"
+    echo "Enter sub domain (i.e. api):"
     read SUB_DOMAIN
     if [[ -z "${SUB_DOMAIN}" ]]; then
         echo "No sub domain set"
@@ -97,6 +96,9 @@ fi
 VIRTUAL_HOST="${SUB_DOMAIN}.${DOMAIN}"
 
 echo "Deploying ${NAME} and binding to ${VIRTUAL_HOST}..."
+
+_DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')
+_DOCKER_IMAGE_NAME="${NAME}:${_DOCKER_TAG}"
 
 # Building docker image
 docker build --no-cache -t ${_DOCKER_IMAGE_NAME} .
