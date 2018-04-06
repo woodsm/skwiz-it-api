@@ -4,6 +4,9 @@ import (
 	"net/http"
 
 	"github.com/benkauffman/skwiz-it-api/config"
+	"encoding/base64"
+	"encoding/json"
+	"github.com/benkauffman/skwiz-it-api/model"
 )
 
 var conf = config.LoadConfig()
@@ -16,7 +19,7 @@ func GetUrl(file string) string {
 func TrimQuotes(s string) string {
 	if len(s) >= 2 {
 		if s[0] == '"' && s[len(s)-1] == '"' {
-			return s[1 : len(s)-1]
+			return s[1: len(s)-1]
 		}
 	}
 	return s
@@ -34,4 +37,13 @@ func Contains(arr [3]string, str string) bool {
 func WriteJsonResponse(w http.ResponseWriter, bytes []byte) {
 	w.Header().Set("Content-Type", "application/json; charset=UTF-8")
 	w.Write(bytes)
+}
+
+func GetUser(r *http.Request) (*model.User, error) {
+	bytes, _ := base64.StdEncoding.DecodeString(r.Header.Get("X-App-User"))
+
+	user := new(model.User)
+	err := json.Unmarshal(bytes, user)
+
+	return user, err
 }

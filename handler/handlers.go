@@ -76,7 +76,9 @@ func SaveSection(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	d, err := database.SaveSection(1, typeOf, helper.GetUrl(fileId))
+	user, _ := helper.GetUser(r)
+
+	d, err := database.SaveSection(user.Id, typeOf, helper.GetUrl(fileId))
 
 	bytes, err := json.Marshal(d)
 	if err != nil {

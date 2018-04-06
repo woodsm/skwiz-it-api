@@ -6,7 +6,7 @@ import (
 	"github.com/benkauffman/skwiz-it-api/model"
 )
 
-func SaveSection(userId int, typeOf string, url string) (model.Drawing, error) {
+func SaveSection(userId int64, typeOf string, url string) (model.Drawing, error) {
 
 	groupId := addToDrawing(userId, typeOf, url)
 
@@ -18,7 +18,7 @@ func SaveSection(userId int, typeOf string, url string) (model.Drawing, error) {
 	return drawing, nil
 }
 
-func addToDrawing(userId int, typeOf string, url string) int64 {
+func addToDrawing(userId int64, typeOf string, url string) int64 {
 	var db = getDatabase()
 	defer db.Close()
 
