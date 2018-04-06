@@ -13,7 +13,7 @@ func GetEmailAddresses(drawingId int64) []string {
 							  DISTINCT (email) AS email
 							FROM section AS s
 							  INNER JOIN app_user AS a ON s.app_user_id = a.id
-							WHERE s.drawing_id = ?`)
+							WHERE s.drawing_id = ?`, drawingId)
 	defer rows.Close()
 
 	if err != nil {
