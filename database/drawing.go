@@ -30,9 +30,18 @@ func IsDrawingComplete(drawingId int64) {
 	if qty == len(helper.GetSections()) {
 		log.Printf("Drawing %d has been completed... Sending out emails and setting as completed...", drawingId)
 		setDrawingAsComplete(drawingId)
-		notification.SendEmail(drawingId)
+		sendEmails(drawingId)
 	} else {
 		log.Printf("Drawing %d only has %d/%d parts supplied...", drawingId, qty, len(helper.GetSections()))
+	}
+}
+
+
+func sendEmails(drawingId int64) {
+	log.Printf("Sending email to users for drawing %d completion", drawingId)
+	for _, emailAddr := range GetEmailAddresses(drawingId) {
+		log.Printf("Sending email in background thread to %s for drawing %d", emailAddr, drawingId)
+		go notification.SendEmail(emailAddr, drawingId)
 	}
 }
 

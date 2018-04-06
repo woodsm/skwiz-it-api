@@ -10,7 +10,7 @@ var conf = config.LoadConfig()
 
 func IsValidEmail(emailAddr string) (bool) {
 
-	mg := mailgun.NewMailgun(conf.MailGun.Domain, config.MailGun.ApiKey, config.MailGun.PublicApiKey)
+	mg := mailgun.NewMailgun(conf.MailGun.Domain, conf.MailGun.ApiKey, conf.MailGun.PublicApiKey)
 	ev, err := mg.ValidateEmail(emailAddr)
 
 	if err != nil {
