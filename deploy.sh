@@ -20,6 +20,7 @@ fi
 # ./deploy.sh \
 #      "skwiz-it-api" \
 #      "skwiz.it" \
+#      "api" \
 #      "development@developmentnow.com" \
 #      "y"
 
