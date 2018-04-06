@@ -59,15 +59,19 @@ ORDER BY qty ASC
 LIMIT 1
 `
 	rows, err := db.Query(sql)
+	defer rows.Close()
 
 	if err != nil {
 		log.Fatalf("Unable get missing section from database : %q\n", err)
 	}
 
-	qty := 0
 	section := ""
 
 	for rows.Next() {
+		var (
+			qty = 0
+		)
+
 		err = rows.Scan(&qty, &section)
 
 		if err != nil {
@@ -79,9 +83,12 @@ LIMIT 1
 		log.Print(err)
 	}
 
-	if qty == 0 || section == "" {
+	if section == "" {
 		sections := helper.GetSections()
 		section = sections[rand.Intn(len(sections))]
+		log.Printf("Wasn't able to find needed section, picking a random one... %s", section)
+	} else {
+		log.Printf("Section \"%s\" provided by the database...", section)
 	}
 
 	return section
