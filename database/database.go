@@ -28,3 +28,22 @@ func getDatabase() sqlbuilder.Database {
 	return sess
 
 }
+
+func CheckHealth() (bool) {
+	var db = getDatabase()
+	defer db.Close()
+
+	row, err := db.QueryRow("SELECT COUNT(id) AS qty FROM app_user")
+	if err != nil {
+		return false
+	}
+
+	qty := -1
+	err = row.Scan(&qty)
+	if err != nil {
+		log.Print(err)
+	}
+
+	return qty >= 0
+
+}

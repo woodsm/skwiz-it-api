@@ -12,6 +12,8 @@ import (
 	"github.com/benkauffman/skwiz-it-api/database"
 	"strconv"
 	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/mailgun/log"
+	"github.com/benkauffman/skwiz-it-api/notification"
 )
 
 func GetSectionType(w http.ResponseWriter, r *http.Request) {
@@ -25,6 +27,18 @@ func GetSectionType(w http.ResponseWriter, r *http.Request) {
 	helper.WriteJsonResponse(w, bytes)
 }
 
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	db := database.CheckHealth()
+	s3 := storage.CheckHealth()
+	mg := notification.CheckHealth()
+
+	if db && s3 && mg {
+		w.WriteHeader(http.StatusOK)
+	} else {
+		log.Errorf("Internal services are not responding as expected: DB = %t, S3 = %t, MG = %t", db, s3, mg)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
+}
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)

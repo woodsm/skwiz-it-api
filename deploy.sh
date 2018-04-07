@@ -15,9 +15,6 @@ if [ ! -f "./config.json" ]; then
     exit 1
 fi
 
-
-
-
 NAME=${1}
 DOMAIN=${2}
 SUB_DOMAIN=${3}
@@ -87,7 +84,6 @@ if [[ -z "${CONTACT_EMAIL}" ]]; then
 fi
 
 VIRTUAL_HOST="${SUB_DOMAIN}.${DOMAIN}"
-
 echo "Deploying ${NAME} and binding to ${VIRTUAL_HOST}..."
 
 _DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')

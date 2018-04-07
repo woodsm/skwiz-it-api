@@ -9,7 +9,10 @@ import (
 	"github.com/benkauffman/skwiz-it-api/middleware"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
+	"github.com/benkauffman/skwiz-it-api/config"
 )
+
+var conf = config.LoadConfig()
 
 func main() {
 
@@ -18,6 +21,8 @@ func main() {
 	log.Printf("Starting server and listening on %s", listen)
 
 	router := mux.NewRouter().StrictSlash(true)
+
+	router.HandleFunc("/api/health", handler.HealthCheck)
 
 	privateBase := mux.NewRouter()
 	router.PathPrefix("/api/v1/private").Handler(negroni.New(
@@ -42,7 +47,7 @@ func main() {
 	public.Methods("GET").Path("/drawings").HandlerFunc(handler.GetDrawings)
 
 	allowedHeaders := handlers.AllowedHeaders([]string{"X-App-User", "Content-Type", "Accept"})
-	allowedOrigins := handlers.AllowedOrigins([]string{"*"})
+	allowedOrigins := handlers.AllowedOrigins([]string{conf.App.Domain + "/*"})
 	allowedMethods := handlers.AllowedMethods([]string{"GET", "HEAD", "POST", "PUT", "DELETE", "OPTIONS"})
 
 	log.Fatal(http.ListenAndServe(listen, handlers.CORS(allowedHeaders, allowedOrigins, allowedMethods)(router)))

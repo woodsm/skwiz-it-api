@@ -17,6 +17,10 @@ import (
 
 var conf = config.LoadConfig()
 
+func CheckHealth() (bool) {
+	return true
+}
+
 func SaveToS3(b64 string) (string, error) {
 	cred := credentials.NewStaticCredentials(conf.S3.AccessKey, conf.S3.AccessSecret, "")
 	_, err := cred.Get()

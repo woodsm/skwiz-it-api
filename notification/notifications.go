@@ -9,6 +9,11 @@ import (
 
 var conf = config.LoadConfig()
 
+func CheckHealth() (bool) {
+	mg := mailgun.NewMailgun(conf.MailGun.Domain, conf.MailGun.ApiKey, conf.MailGun.PublicApiKey)
+	return mg.ApiKey() == conf.MailGun.ApiKey
+}
+
 func SendEmail(emailAddr string, drawingId int64) {
 
 	log.Printf("Mailgun %s for drawing %d", emailAddr, drawingId)
