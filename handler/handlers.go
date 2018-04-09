@@ -6,14 +6,16 @@ import (
 	"net/http"
 	"strings"
 
+	"strconv"
+
+	"log"
+
+	"github.com/benkauffman/skwiz-it-api/database"
+	"github.com/benkauffman/skwiz-it-api/helper"
+	"github.com/benkauffman/skwiz-it-api/model"
+	"github.com/benkauffman/skwiz-it-api/notification"
 	"github.com/benkauffman/skwiz-it-api/storage"
 	"github.com/gorilla/mux"
-	"github.com/benkauffman/skwiz-it-api/helper"
-	"github.com/benkauffman/skwiz-it-api/database"
-	"strconv"
-	"github.com/benkauffman/skwiz-it-api/model"
-	"github.com/mailgun/log"
-	"github.com/benkauffman/skwiz-it-api/notification"
 )
 
 func GetSectionType(w http.ResponseWriter, r *http.Request) {
@@ -35,7 +37,7 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 	if db && s3 && mg {
 		w.WriteHeader(http.StatusOK)
 	} else {
-		log.Errorf("Internal services are not responding as expected: DB = %t, S3 = %t, MG = %t", db, s3, mg)
+		log.Fatalf("Internal services are not responding as expected: DB = %t, S3 = %t, MG = %t", db, s3, mg)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
