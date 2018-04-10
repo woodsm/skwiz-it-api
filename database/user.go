@@ -1,8 +1,9 @@
 package database
 
 import (
-	"github.com/benkauffman/skwiz-it-api/model"
-	"github.com/benkauffman/skwiz-it-api/validation"
+	"../model"
+	"../validation"
+
 	"fmt"
 )
 
@@ -16,7 +17,7 @@ func UpsertUser(user *model.User) (*model.User, error) {
 	defer db.Close()
 
 	sql := `INSERT INTO app_user (email, created, name, updated) VALUES (?, NOW(), ?, NOW())
-			ON DUPLICATE KEY UPDATE updated = VALUES(updated)`
+			ON DUPLICATE KEY UPDATE name = VALUES(name), updated = VALUES(updated)`
 
 	res, err := db.Exec(sql, user.Email, user.Name)
 

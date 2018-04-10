@@ -1,10 +1,12 @@
 package notification
 
 import (
+	"../config"
+
 	"log"
-	"github.com/benkauffman/skwiz-it-api/config"
-	"gopkg.in/mailgun/mailgun-go.v1"
 	"strconv"
+
+	"gopkg.in/mailgun/mailgun-go.v1"
 )
 
 var conf = config.LoadConfig()

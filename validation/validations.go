@@ -2,7 +2,7 @@ package validation
 
 import (
 	"github.com/mailgun/mailgun-go"
-	"github.com/benkauffman/skwiz-it-api/config"
+	"../config"
 	"log"
 )
 

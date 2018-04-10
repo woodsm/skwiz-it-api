@@ -1,13 +1,13 @@
 package database
 
 import (
+	"../model"
+	"../notification"
+	"../helper"
+
 	"database/sql"
 	"fmt"
 	"log"
-
-	"github.com/benkauffman/skwiz-it-api/model"
-	"github.com/benkauffman/skwiz-it-api/notification"
-	"github.com/benkauffman/skwiz-it-api/helper"
 )
 
 func IsDrawingComplete(drawingId int64) {
@@ -35,7 +35,6 @@ func IsDrawingComplete(drawingId int64) {
 		log.Printf("Drawing %d only has %d/%d parts supplied...", drawingId, qty, len(helper.GetSections()))
 	}
 }
-
 
 func sendEmails(drawingId int64) {
 	log.Printf("Sending email to users for drawing %d completion", drawingId)

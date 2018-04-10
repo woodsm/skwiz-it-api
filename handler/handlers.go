@@ -1,20 +1,19 @@
 package handler
 
 import (
+	"../database"
+	"../helper"
+	"../model"
+	"../storage"
+	"../notification"
+
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
-
 	"strconv"
-
 	"log"
 
-	"github.com/benkauffman/skwiz-it-api/database"
-	"github.com/benkauffman/skwiz-it-api/helper"
-	"github.com/benkauffman/skwiz-it-api/model"
-	"github.com/benkauffman/skwiz-it-api/notification"
-	"github.com/benkauffman/skwiz-it-api/storage"
 	"github.com/gorilla/mux"
 )
 
@@ -36,11 +35,14 @@ func HealthCheck(w http.ResponseWriter, r *http.Request) {
 
 	if db && s3 && mg {
 		w.WriteHeader(http.StatusOK)
+		helper.WriteJsonResponse(w, []byte{})
+		return
 	} else {
 		log.Fatalf("Internal services are not responding as expected: DB = %t, S3 = %t, MG = %t", db, s3, mg)
 		w.WriteHeader(http.StatusInternalServerError)
 	}
 }
+
 func RegisterUser(w http.ResponseWriter, r *http.Request) {
 
 	body, err := ioutil.ReadAll(r.Body)

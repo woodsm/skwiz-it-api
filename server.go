@@ -1,15 +1,16 @@
 package main
 
 import (
+	"./config"
+	"./handler"
+	"./middleware"
+
 	"log"
 	"net/http"
 
 	"github.com/codegangsta/negroni"
-	"github.com/benkauffman/skwiz-it-api/handler"
-	"github.com/benkauffman/skwiz-it-api/middleware"
 	"github.com/gorilla/handlers"
 	"github.com/gorilla/mux"
-	"github.com/benkauffman/skwiz-it-api/config"
 )
 
 var conf = config.LoadConfig()
@@ -22,7 +23,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	router.HandleFunc("/api/health", handler.HealthCheck)
+	//router.HandleFunc("/api/health", handler.HealthCheck)
 
 	privateBase := mux.NewRouter()
 	router.PathPrefix("/api/v1/private").Handler(negroni.New(

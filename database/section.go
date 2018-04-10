@@ -1,10 +1,10 @@
 package database
 
 import (
-	"log"
+	"../model"
+	"../helper"
 
-	"github.com/benkauffman/skwiz-it-api/model"
-	"github.com/benkauffman/skwiz-it-api/helper"
+	"log"
 	"math/rand"
 )
 

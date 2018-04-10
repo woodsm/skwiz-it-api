@@ -1,12 +1,12 @@
 package helper
 
 import (
-	"net/http"
+	"../config"
+	"../model"
 
-	"github.com/benkauffman/skwiz-it-api/config"
-	"encoding/base64"
+	"net/http"
 	"encoding/json"
-	"github.com/benkauffman/skwiz-it-api/model"
+	"encoding/base64"
 )
 
 var conf = config.LoadConfig()
@@ -19,7 +19,7 @@ func GetUrl(file string) string {
 func TrimQuotes(s string) string {
 	if len(s) >= 2 {
 		if s[0] == '"' && s[len(s)-1] == '"' {
-			return s[1: len(s)-1]
+			return s[1 : len(s)-1]
 		}
 	}
 	return s
