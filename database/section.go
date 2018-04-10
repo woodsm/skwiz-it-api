@@ -102,7 +102,7 @@ func addToDrawing(userId int64, typeOf string, url string) int64 {
 			(drawing_id, type, app_user_id, url, created, updated) 
 			VALUES (?, ?, ?, ?, NOW(), NOW())`
 
-	drawingId := getMissingDrawingId(typeOf)
+	drawingId := getMissingDrawingId(userId, typeOf)
 
 	existing := drawingId >= 1
 
@@ -129,14 +129,18 @@ func addToDrawing(userId int64, typeOf string, url string) int64 {
 	return drawingId
 }
 
-func getMissingDrawingId(typeOf string) (id int64) {
+func getMissingDrawingId(userId int64, typeOf string) (id int64) {
 	log.Printf("Looking for drawing with missing %s section...", typeOf)
 
 	var db = getDatabase()
 	defer db.Close()
 
-	sql := "SELECT id FROM drawing WHERE id NOT IN (SELECT drawing_id FROM section WHERE `type` = ?) LIMIT 1"
-	row, err := db.QueryRow(sql, typeOf)
+	sql := `
+SELECT id FROM drawing WHERE id NOT IN (
+  SELECT drawing_id FROM section WHERE type = ? OR user_id = ?
+) LIMIT 1;
+`
+	row, err := db.QueryRow(sql, typeOf, userId)
 
 	if err != nil {
 		log.Fatalf("Unable to check for missing parts in drawings : %q\n", err)
