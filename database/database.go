@@ -1,9 +1,10 @@
 package database
 
 import (
+	"../config"
+
 	"log"
 
-	"github.com/benkauffman/skwiz-it-api/config"
 	"upper.io/db.v3/lib/sqlbuilder"
 	"upper.io/db.v3/mysql" // Imports the mysql adapter.
 )
@@ -26,5 +27,24 @@ func getDatabase() sqlbuilder.Database {
 	}
 
 	return sess
+
+}
+
+func CheckHealth() (bool) {
+	var db = getDatabase()
+	defer db.Close()
+
+	row, err := db.QueryRow("SELECT COUNT(id) AS qty FROM app_user")
+	if err != nil {
+		return false
+	}
+
+	qty := -1
+	err = row.Scan(&qty)
+	if err != nil {
+		log.Print(err)
+	}
+
+	return qty >= 0
 
 }

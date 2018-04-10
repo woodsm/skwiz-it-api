@@ -5,25 +5,15 @@ set -e #exit on errors
 
 echo "Running deploy.sh"
 
+echo "Example parameters to pass to this shell script..."
+echo "./deploy.sh skwiz-it-api skwiz.it api development@developmentnow.com y"
+
 #SHELL SCRIPT STARTS HERE
 if [ ! -f "./config.json" ]; then
-    echo "Missing config file \"./config.json\", application will not run without it..."
+    echo "Missing config file ./config.json, application will not run without it..."
     echo "Exiting"
     exit 1
 fi
-
-
-
-###
-### Example
-###
-# ./deploy.sh \
-#      "skwiz-it-api" \
-#      "skwiz.it" \
-#      "development@developmentnow.com" \
-#      "y"
-
-
 
 NAME=${1}
 DOMAIN=${2}
@@ -64,7 +54,7 @@ else
 fi
 
 if [[ -z "${DOMAIN}" ]]; then
-    echo "Enter domain url (i.e. example.net):"
+    echo "Enter domain url (i.e. skwiz.it):"
     read DOMAIN
     if [[ -z "${DOMAIN}" ]]; then
         echo "Host domain was not set"
@@ -77,7 +67,7 @@ if [[ -z "${SUB_DOMAIN}" ]]; then
     echo "Enter sub domain (i.e. api):"
     read SUB_DOMAIN
     if [[ -z "${SUB_DOMAIN}" ]]; then
-        echo "No sub domain set"
+        echo "Sub domain was not set"
         echo "Exiting..."
         exit 1
     fi
@@ -87,14 +77,13 @@ if [[ -z "${CONTACT_EMAIL}" ]]; then
     echo "Enter contact email for domain expiration:"
     read CONTACT_EMAIL
     if [[ -z "${CONTACT_EMAIL}" ]]; then
-        echo "Sub domain was not set"
+        echo "Contact email was not set"
         echo "Exiting..."
         exit 1
     fi
 fi
 
 VIRTUAL_HOST="${SUB_DOMAIN}.${DOMAIN}"
-
 echo "Deploying ${NAME} and binding to ${VIRTUAL_HOST}..."
 
 _DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')

@@ -1,17 +1,20 @@
 package handler
 
 import (
+	"../database"
+	"../helper"
+	"../model"
+	"../storage"
+	"../notification"
+
 	"encoding/json"
 	"io/ioutil"
 	"net/http"
 	"strings"
-
-	"github.com/benkauffman/skwiz-it-api/storage"
-	"github.com/gorilla/mux"
-	"github.com/benkauffman/skwiz-it-api/helper"
-	"github.com/benkauffman/skwiz-it-api/database"
 	"strconv"
-	"github.com/benkauffman/skwiz-it-api/model"
+	"log"
+
+	"github.com/gorilla/mux"
 )
 
 func GetSectionType(w http.ResponseWriter, r *http.Request) {
@@ -23,6 +26,21 @@ func GetSectionType(w http.ResponseWriter, r *http.Request) {
 	}
 
 	helper.WriteJsonResponse(w, bytes)
+}
+
+func HealthCheck(w http.ResponseWriter, r *http.Request) {
+	db := database.CheckHealth()
+	s3 := storage.CheckHealth()
+	mg := notification.CheckHealth()
+
+	if db && s3 && mg {
+		w.WriteHeader(http.StatusOK)
+		helper.WriteJsonResponse(w, []byte{})
+		return
+	} else {
+		log.Fatalf("Internal services are not responding as expected: DB = %t, S3 = %t, MG = %t", db, s3, mg)
+		w.WriteHeader(http.StatusInternalServerError)
+	}
 }
 
 func RegisterUser(w http.ResponseWriter, r *http.Request) {

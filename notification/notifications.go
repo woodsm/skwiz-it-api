@@ -1,13 +1,20 @@
 package notification
 
 import (
+	"../config"
+
 	"log"
-	"github.com/benkauffman/skwiz-it-api/config"
-	"gopkg.in/mailgun/mailgun-go.v1"
 	"strconv"
+
+	"gopkg.in/mailgun/mailgun-go.v1"
 )
 
 var conf = config.LoadConfig()
+
+func CheckHealth() (bool) {
+	mg := mailgun.NewMailgun(conf.MailGun.Domain, conf.MailGun.ApiKey, conf.MailGun.PublicApiKey)
+	return mg.ApiKey() == conf.MailGun.ApiKey
+}
 
 func SendEmail(emailAddr string, drawingId int64) {
 
