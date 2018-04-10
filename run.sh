@@ -17,7 +17,7 @@ if [[ -z "${IMAGE_ID}" ]]; then
     docker build -t ${NAME} .
     else
     echo "Using existing docker image."
-    echo "If you want to rebuild it, use \"docker rm -f ${NAME}\" to remove it and run this script again"
+    echo "If you want to rebuild it, use \"docker rmi -f ${NAME}\" to remove it and run this script again"
 fi
 
 docker run -d -p 8081:3000 --name ${NAME} --restart always ${NAME}
