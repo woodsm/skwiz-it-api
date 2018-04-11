@@ -18,6 +18,9 @@ RUN mkdir /lib64 && ln -s /lib/libc.musl-x86_64.so.1 /lib64/ld-linux-x86-64.so.2
 WORKDIR /usr/local/bin
 COPY --from=build /src/skwiz-it-api /usr/local/bin/skwiz-it-api
 COPY --from=build /src/config.json /usr/local/bin/config.json
+COPY --from=build /src/template.email.html /usr/local/bin/template.email.html
+COPY --from=build /src/template.email.txt /usr/local/bin/template.email.txt
+
 RUN chmod +x /usr/local/bin/skwiz-it-api
 
 CMD ["skwiz-it-api"]

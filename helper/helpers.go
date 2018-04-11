@@ -1,13 +1,12 @@
 package helper
 
 import (
-	"../config"
-	"../model"
-
 	"net/http"
 	"encoding/json"
 	"encoding/base64"
 	"log"
+	"../config"
+	"../model"
 )
 
 var conf = config.LoadConfig()
@@ -63,7 +62,7 @@ func CheckError(err error) {
 func GetStringFromNullable(s *string) string {
 	if s == nil {
 		temp := "" // *string cannot be initialized
-		s = &temp // in one statement
+		s = &temp  // in one statement
 	}
 	value := *s // safe to dereference the *string
 
