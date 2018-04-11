@@ -4,6 +4,7 @@ import (
 	"./config"
 	"./handler"
 	"./middleware"
+
 	"log"
 	"net/http"
 
@@ -15,7 +16,6 @@ import (
 var conf = config.LoadConfig()
 
 func main() {
-
 	listen := "0.0.0.0:3000"
 
 	log.Printf("Starting server and listening on %s", listen)

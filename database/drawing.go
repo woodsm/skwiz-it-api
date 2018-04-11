@@ -10,7 +10,6 @@ import (
 	"database/sql"
 	"fmt"
 	"log"
-
 )
 
 func IsDrawingComplete(drawingId int64) {

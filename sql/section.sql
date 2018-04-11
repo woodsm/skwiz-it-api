@@ -33,7 +33,12 @@ ORDER BY qty ASC
 LIMIT 1;
 
 
-SELECT id FROM drawing WHERE id NOT IN (
-  SELECT drawing_id FROM section WHERE type = ? OR user_id = ?
-) LIMIT 1;
+SELECT id
+FROM drawing
+WHERE id NOT IN (
+  SELECT drawing_id
+  FROM section
+  WHERE type = ? OR user_id = ?
+)
+LIMIT 1;
 
