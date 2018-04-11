@@ -86,11 +86,11 @@ fi
 VIRTUAL_HOST="${SUB_DOMAIN}.${DOMAIN}"
 echo "Deploying ${NAME} and binding to ${VIRTUAL_HOST}..."
 
-_DOCKER_TAG=$(date '+%Y_%m_%d_%H_%M_%S')
+_DOCKER_TAG=$(git rev-parse --short HEAD)
 _DOCKER_IMAGE_NAME="${NAME}:${_DOCKER_TAG}"
 
 # Building docker image
-docker build --no-cache -t ${_DOCKER_IMAGE_NAME} .
+docker build -t ${_DOCKER_IMAGE_NAME} .
 
 set +e
 docker rm -f ${NAME}
