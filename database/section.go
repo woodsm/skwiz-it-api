@@ -137,7 +137,7 @@ func getMissingDrawingId(userId int64, typeOf string) (id int64) {
 
 	sql := `
 SELECT id FROM drawing WHERE id NOT IN (
-  SELECT drawing_id FROM section WHERE type = ? OR user_id = ?
+  SELECT drawing_id FROM section WHERE type = ? OR app_user_id = ?
 ) LIMIT 1;
 `
 	row, err := db.QueryRow(sql, typeOf, userId)
