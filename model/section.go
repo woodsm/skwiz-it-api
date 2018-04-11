@@ -5,3 +5,7 @@ type Section struct {
 	Email *string `json:"email"`
 	Url   *string `json:"url"`
 }
+
+func GetUrl() {
+
+}

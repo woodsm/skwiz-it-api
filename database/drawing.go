@@ -4,10 +4,13 @@ import (
 	"../model"
 	"../notification"
 	"../helper"
+	"../image"
+	"../storage"
 
 	"database/sql"
 	"fmt"
 	"log"
+
 )
 
 func IsDrawingComplete(drawingId int64) {
@@ -29,7 +32,18 @@ func IsDrawingComplete(drawingId int64) {
 
 	if qty == len(helper.GetSections()) {
 		log.Printf("Drawing %d has been completed... Sending out emails and setting as completed...", drawingId)
-		setDrawingAsComplete(drawingId)
+
+		//combine all the drawings into a full drawing
+		drawing, err := GetDrawing(drawingId)
+		helper.CheckError(err)
+		b64 := image.CreateFullDrawing(drawing)
+
+		//save the full drawing to S3
+		fileId, err := storage.SaveToS3(b64)
+		helper.CheckError(err)
+		url := helper.GetUrl(fileId)
+
+		setDrawingAsComplete(drawingId, url)
 		sendEmails(drawingId)
 	} else {
 		log.Printf("Drawing %d only has %d/%d parts supplied...", drawingId, qty, len(helper.GetSections()))
@@ -44,11 +58,11 @@ func sendEmails(drawingId int64) {
 	}
 }
 
-func setDrawingAsComplete(drawingId int64) {
+func setDrawingAsComplete(drawingId int64, url string) {
 	var db = getDatabase()
 	defer db.Close()
 
-	_, err := db.Exec(`UPDATE drawing SET completed = NOW() WHERE id = ?`, drawingId)
+	_, err := db.Exec(`UPDATE drawing SET completed = NOW(), url = ? WHERE id = ?`, url, drawingId)
 
 	if err != nil {
 		log.Fatalf("Unable to set drawing %d completed datetime : %q\n", drawingId, err)

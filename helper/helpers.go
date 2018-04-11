@@ -7,6 +7,7 @@ import (
 	"net/http"
 	"encoding/json"
 	"encoding/base64"
+	"log"
 )
 
 var conf = config.LoadConfig()
@@ -50,4 +51,21 @@ func GetUser(r *http.Request) (*model.User, error) {
 
 func GetSections() [3]string {
 	return [3]string{"top", "middle", "bottom"}
+}
+
+func CheckError(err error) {
+	if err != nil {
+		log.Fatal(err)
+		panic(err)
+	}
+}
+
+func GetStringFromNullable(s *string) string {
+	if s == nil {
+		temp := "" // *string cannot be initialized
+		s = &temp // in one statement
+	}
+	value := *s // safe to dereference the *string
+
+	return value
 }
