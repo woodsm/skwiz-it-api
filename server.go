@@ -4,7 +4,6 @@ import (
 	"./config"
 	"./handler"
 	"./middleware"
-
 	"log"
 	"net/http"
 
@@ -23,7 +22,7 @@ func main() {
 
 	router := mux.NewRouter().StrictSlash(true)
 
-	//router.HandleFunc("/api/health", handler.HealthCheck)
+	router.HandleFunc("/api/health", handler.HealthCheck)
 
 	privateBase := mux.NewRouter()
 	router.PathPrefix("/api/v1/private").Handler(negroni.New(
