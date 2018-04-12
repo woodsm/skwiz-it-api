@@ -66,6 +66,9 @@ The `X-App-User` header should contain the user json object base64 encoded
     - `data:image/png;base64,iVkhdfjdAjdfirtn=`
     - returns the drawing associated with the section that was posted
 
+- http://localhost:3000/api/v1/private/drawings
+    - `GET`: Get all of the _drawings_ that the user has participated in.
+    - `[{"id": 1, "url": null, "top": { "name": null, "email": null, "url": null }, "middle": { "name": null, "email": null, "url": null }, "bottom": { "name": null, "email": null, "url": null }}]`
 
 ## User
 ```json

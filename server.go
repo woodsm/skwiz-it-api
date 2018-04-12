@@ -34,6 +34,7 @@ func main() {
 	private := privateBase.PathPrefix("/api/v1/private").Subrouter()
 	private.Methods("GET").Path("/section/type").HandlerFunc(handler.GetSectionType)
 	private.Methods("POST").Path("/section/{type}").HandlerFunc(handler.SaveSection)
+	private.Methods("GET").Path("/drawings").HandlerFunc(handler.GetUserDrawings)
 
 	publicBase := mux.NewRouter()
 	router.PathPrefix("/api/v1/public").Handler(negroni.New(
