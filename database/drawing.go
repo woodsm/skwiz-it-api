@@ -210,7 +210,9 @@ WHERE d.id <> 0
 	}
 
 	if user != nil && user.Id >= 1 {
-		s += " AND a.id = " + strconv.FormatInt(user.Id, 10)
+		s += " AND d.id IN ("
+		s += " SELECT drawing_id FROM section WHERE app_user_id = " + strconv.FormatInt(user.Id, 10)
+		s += ") "
 
 	}
 
