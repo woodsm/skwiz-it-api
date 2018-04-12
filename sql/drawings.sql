@@ -49,7 +49,7 @@ FROM drawing AS d
 WHERE
   d.id <> 0
 --   AND d.id = ?
---   AND a.id = ?
+--   AND d.id IN (SELECT drawing_id FROM section WHERE app_user_id = )
 GROUP BY
   d.id,
   d.url,
