@@ -48,7 +48,8 @@ FROM drawing AS d
   LEFT JOIN app_user a ON s.app_user_id = a.id
 WHERE
   d.id <> 0
-  AND d.completed IS NOT NULL
+--   AND d.id = ?
+--   AND a.id = ?
 GROUP BY
   d.id,
   d.url,
@@ -56,5 +57,5 @@ GROUP BY
   d.updated,
   d.completed;
 
-INSERT INTO drawing (id, url, created, updated, completed) VALUES (0, NULL, NOW(), NOW(), NULL)
+INSERT INTO drawing (id, url, created, updated, completed) VALUES (0, NULL, NOW(), NOW(), NULL);
 

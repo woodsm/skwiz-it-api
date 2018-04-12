@@ -108,9 +108,23 @@ func SaveSection(w http.ResponseWriter, r *http.Request) {
 	helper.WriteJsonResponse(w, bytes)
 }
 
+func GetUserDrawings(w http.ResponseWriter, r *http.Request) {
+
+	user, _ := helper.GetUser(r)
+
+	list := database.GetDrawings(user)
+
+	bytes, err := json.Marshal(list)
+	if err != nil {
+		http.Error(w, err.Error(), http.StatusInternalServerError)
+	}
+
+	helper.WriteJsonResponse(w, bytes)
+}
+
 func GetDrawings(w http.ResponseWriter, r *http.Request) {
 
-	list := database.GetDrawings()
+	list := database.GetDrawings(nil)
 
 	bytes, err := json.Marshal(list)
 	if err != nil {
