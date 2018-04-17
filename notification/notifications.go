@@ -27,7 +27,7 @@ func SendEmail(emailAddr string, drawingId int64) {
 	mg := mailgun.NewMailgun(conf.MailGun.Domain, conf.MailGun.ApiKey, conf.MailGun.PublicApiKey)
 	message := mg.NewMessage(
 		"notifications@skwiz.it",
-		"Your exquisite corpse drawing!",
+		"Your corpse is ready!",
 		LoadMessage("txt", url),
 		emailAddr)
 
